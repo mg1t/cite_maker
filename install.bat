@@ -1,15 +1,11 @@
 @ECHO off
-title APRS32 Commander Package Installer
-pip3 install --upgrade pip
+title CITE Maker Package Installer
 pip3 install pysimplegui
-pip3 install numpy
-pip3 install matplotlib
-pip install remi
-pip install pysimpleguiweb
+pip3 install pyperclip
 cls
 
 ECHO ########################################
-ECHO #  APRS32 Commander Package Installer  #
+ECHO #     CITE Maker Package Installer     #
 ECHO ########################################
 ECHO #       Alle benoetigten Dateien       #
 ECHO #          wurden installiert          #
