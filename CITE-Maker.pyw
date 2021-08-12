@@ -26,9 +26,9 @@ def create_item(type,tag,author,titel,jahr,puplisher,isbn,urldate,url):
     if (isbn != ""):
         datastring += ",\n\tISBN={" + isbn + "}"
     if (urldate != ""):
-        datastring += ",\n\turldate={" + urldate + "}"
+        datastring += ",\n\tURLDATE={" + urldate + "}"
     if (url != ""):
-        datastring += ",\n\turl={" + url + "}"
+        datastring += ",\n\tURL={" + url + "}"
 
     datastring+="\n}"
 
