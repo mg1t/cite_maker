@@ -59,7 +59,7 @@ layout = [
 
                [sg.Multiline('', size=(55, 9), key="cite_window",disabled=True)],
 
-        [sg.Text('CITE Maker von Michael Gräf', size=(25, 1)),sg.Button('Kopieren!', size=(25, 1),key="bib_copy")]
+        [sg.Text('CITE Maker von mg1t', size=(25, 1)),sg.Button('Kopieren!', size=(25, 1),key="bib_copy")]
 
           ]  # ende layout
 
