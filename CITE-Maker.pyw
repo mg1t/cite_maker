@@ -56,8 +56,8 @@ layout = [
                 [sg.Text('URL:', size=(25, 1)),
                sg.In('', size=(25, 1), key="bib_url")]
           ], title='Literaturdaten')],
-
-               [sg.Multiline('', size=(55, 9), key="cite_window",disabled=True)],
+            [sg.Text('', size=(25, 1)),sg.Button('Eingabe löschen', size=(25, 1),key="bib_clear")],
+         [sg.Multiline('', size=(55, 9), key="cite_window",disabled=True)],
 
         [sg.Text('CITE Maker von mg1t', size=(25, 1)),sg.Button('Kopieren!', size=(25, 1),key="bib_copy")]
 
@@ -75,16 +75,20 @@ while True:
         window.Element("bib_tag").Update(values["bib_type"])
 
     if event=="bib_copy":
-        pyperclip.copy(create_item(values["bib_type"],
-                                                    values["bib_tag"],
-                                                     values["bib_author"],
-                                                     values["bib_titel"],
-                                                     values["bib_jahr"],
-                                                     values["bib_puplisher"],
-                                                     values["bib_isbn"],
-                                                     values["bib_urldate"],
-                                                     values["bib_url"]))
+        pyperclip.copy(values["cite_window"])
 
+    if event=="bib_clear":
+        window.Element("bib_tag").Update(value=values["bib_type"]+':')
+        window.Element("bib_author").Update(value='')
+        window.Element("bib_titel").Update(value='')
+        window.Element("bib_jahr").Update(value='')
+        window.Element("bib_puplisher").Update(value='')
+        window.Element("bib_isbn").Update(value='')
+        window.Element("bib_urldate").Update(value='')
+        window.Element("bib_url").Update(value='')
+        
+        
+        
     #if event!="__TIMEOUT__":
     window.Element("cite_window").Update(create_item(values["bib_type"],
                                                     values["bib_tag"],
@@ -101,6 +105,7 @@ while True:
         new_type=values["bib_type"]+":"
         window.Element("bib_tag").Update(value=new_type)
     old_type=values["bib_type"]
+
 
 
 
