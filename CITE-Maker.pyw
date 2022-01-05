@@ -6,7 +6,10 @@
 _DEBUG_ = True
 _TIMEOUT_=100
 
-# pip install pysimplegui
+
+from datetime import date
+today = date.today()
+
 import PySimpleGUI as sg
 import pyperclip
 
@@ -34,7 +37,7 @@ def create_item(type,tag,author,titel,jahr,puplisher,isbn,urldate,url):
 
     return datastring
 
-type_menu=['book', 'paper', 'website']
+type_menu=['book', 'paper', 'website', 'manual']
 layout = [
           [sg.Frame(layout=[
                 [sg.Text('Quellenart:', size=(25, 1)),
@@ -52,7 +55,7 @@ layout = [
                 [sg.Text('ISBN:', size=(25, 1)),
                sg.In('', size=(25, 1), key="bib_isbn")],
                 [sg.Text('zuletzt besucht (YYYY-MM-DD):', size=(25, 1)),
-               sg.In('', size=(25, 1), key="bib_urldate")],
+               sg.In(today, size=(25, 1), key="bib_urldate")],
                 [sg.Text('URL:', size=(25, 1)),
                sg.In('', size=(25, 1), key="bib_url")]
           ], title='Literaturdaten')],
@@ -84,7 +87,7 @@ while True:
         window.Element("bib_jahr").Update(value='')
         window.Element("bib_puplisher").Update(value='')
         window.Element("bib_isbn").Update(value='')
-        window.Element("bib_urldate").Update(value='')
+        window.Element("bib_urldate").Update(value=today)
         window.Element("bib_url").Update(value='')
         
         
