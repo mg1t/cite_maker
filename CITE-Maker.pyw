@@ -6,7 +6,7 @@
 # +Update: Automatisches einfügen in .bib-Datei implementiert
 #
 
-_DEBUG_ = True
+DEBUG = False
 _TIMEOUT_=100
 
 
@@ -15,6 +15,7 @@ today = date.today()
 
 import PySimpleGUI as sg
 import pyperclip
+import os
 
 
 def create_item(type,tag,author,titel,jahr,puplisher,isbn,urldate,url):
@@ -52,7 +53,7 @@ layout = [
             [sg.Text('Jahr der Veröffentlichung:', size=(25, 1)),   sg.In('', size=(36, 1),  key="bib_jahr")],
             [sg.Text('Verlag:', size=(25, 1)),                      sg.In('', size=(36, 1), key="bib_puplisher")],
             [sg.Text('ISBN:', size=(25, 1)),                        sg.In('', size=(36, 1), key="bib_isbn")],
-            [sg.Text('zuletzt besucht (YYYY-MM-DD):', size=(25, 1)),sg.In(today, size=(22, 1), key="bib_urldate"), sg.CalendarButton('Kalender', 	no_titlebar=True, size=(9, 1),format=('%Y-%m-%d'), target='bib_urldate', pad=None, font=('MS Sans Serif', 10, 'bold'))],
+            [sg.Text('zuletzt besucht (YYYY-MM-DD):', size=(25, 1)),sg.In(today, size=(22, 1), key="bib_urldate"), sg.CalendarButton('Kalender', no_titlebar=True, size=(9, 1),format=('%Y-%m-%d'), target='bib_urldate', pad=None, font=('MS Sans Serif', 10, 'bold'))],
             [sg.Text('URL:', size=(25, 1)),                         sg.In('', size=(36, 1), key="bib_url")]
           ], title='Literaturdaten')],
             [sg.Text('', size=(25, 1)),                             sg.Button('Eingabe löschen', size=(25, 1),key="bib_clear")],
@@ -90,12 +91,20 @@ while True:
         window.Element("bib_isbn").Update(value='')
         window.Element("bib_urldate").Update(value=today)
         window.Element("bib_url").Update(value='')
-        
+
+    # Wenn Button "in datei speichern" geklickt wurde
+    if event=="bib_save":
+        if(valid_file):
+            file_path=os.path.normpath(new_path)
+            with open(file_path, 'a') as file:
+                file.write(values["cite_window"])
+        else:
+            sg.popup('Die ausgewählte Datei ist keine gültige Datei!', title='Fehler', background_color='red', keep_on_top=True, )
         
         
     #if event!="__TIMEOUT__":
     window.Element("cite_window").Update(create_item(values["bib_type"],
-                                                    values["bib_tag"],
+                                                     values["bib_tag"],
                                                      values["bib_author"],
                                                      values["bib_titel"],
                                                      values["bib_jahr"],
@@ -112,7 +121,7 @@ while True:
 
     #Check ob eine Datei gewählt wurde
     if (old_path != values["file_path"]):
-        new_path=values["file_path"]+":"
+        new_path=values["file_path"]
         #Check der Datei
         if(new_path.find('.bib')!=-1):
             valid_file=True
@@ -125,7 +134,8 @@ while True:
         print('----> Neuer Dateipfad')
     old_path=values["file_path"]
 
-    print(event)
+    if(DEBUG):
+        print(event)
 
 
 window.close()
